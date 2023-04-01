@@ -1,54 +1,66 @@
 <div class="container-fluid">
-
   <div class="container">
-
     <!-- title of the page -->
     <h1 class="text-center text-primary mb-5 mt-3">Random User Generator</h1>
 
     <!-- input fields -->
-    <div class="row d-flex justify-content-center" >
-      <div class="col-6" >
-
+    <div class="row d-flex justify-content-center">
+      <div class="col-6">
         <label for="choose-country" class="mb-2 fw-bold">Choose country</label>
-        <select class="form-select mb-4" id="choose-country">
-          <option value="1">One</option>
-          <option value="2">Two</option>
-          <option value="3">Three</option>
+        <select class="form-select mb-4" id="choose-country" [(ngModel)]="selectedCountry" (change)="onSelect($event)">
+          <option *ngFor="let country of countries" value="{{country.value}}">{{country.name}}</option>
         </select>
 
         <label for="error-number" class="mb-2 fw-bold">The number of error per record</label>
-        <input type="number" class="form-control mb-4" id="error-number">
-        
+        <input type="number" class="form-control mb-4" id="error-number" [(ngModel)]="errorsPerRecord">
+
         <div class="col-12 mb-3 fw-bold">
-          <label for="">Generated Random seed:</label>
+          <label for="">Generated Random seed: <span class="fw-italic text-success">{{randomSeed}}</span> </label>
         </div>
 
-        <button class="btn-primary btn me-3">Generate Seed</button>
-        <button class="btn btn-success">Generate Random Data</button>
+        <button class="btn-primary btn me-3" (click)="onGenerateRandomSeed()">Generate Seed</button>
+        <button class="btn btn-success" (click)="onGenerateUsers()">Generate Random Data</button>
       </div>
     </div>
 
     <!-- generated data table -->
-    <table class="table table-striped mt-5">
-      <thead>
-        <tr>
-          <th scope="col">Index</th>
-          <th scope="col">Random Identifier</th>
-          <th scope="col">Full Name</th>
-          <th scope="col">Full Adress</th>
-          <th scope="col">Phone number</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <th scope="row">1</th>
-          <td>sfhu3y3</td>
-          <td>Murodov Javohir Rahmonjon o'gli</td>
-          <td>Bukhara region,Jandar district</td>
-          <td>+998943242636</td>
-        </tr>
-      </tbody>
-    </table>
+    <div class="table-responsive mt-5" infiniteScroll
+    [infiniteScrollDistance]="2"
+    [infiniteScrollUpDistance]="4"
+    [infiniteScrollThrottle]="500"
+    [scrollWindow]="false"
+    (scrolled)="onScroll()"
+    >
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">Index</th>
+            <th scope="col">Random Identifier</th>
+            <th scope="col">Full Name</th>
+            <th scope="col">Full Address</th>
+            <th scope="col">Phone number</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let user of paginatedUsers">
+            <th scope="row">{{user.index}}</th>
+            <td>{{user.identifier}}</td>
+            <td>{{user.fullName}}</td>
+            <td>{{user.fullAddress}}</td>
+            <td>{{user.phone}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <nav aria-label="Page navigation example " class="mt-3">
+      <ul class="pagination">
+        <li [ngClass]="currentPage === page ? 'active' : ''" class="page-item" *ngFor="let page of pages"
+          (click)="onPageChange(page)">
+          <a class="page-link">{{page}}</a>
+        </li>
+      </ul>
+    </nav>
 
   </div>
 </div>
