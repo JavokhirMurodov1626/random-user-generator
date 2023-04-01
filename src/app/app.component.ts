@@ -223,5 +223,7 @@ export class AppComponent implements OnInit {
   
       this.scrollPage++;
     },1000)
+
+    this.isLoadingMore=false
   }
 }

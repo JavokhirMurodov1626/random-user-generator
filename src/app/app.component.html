@@ -59,8 +59,10 @@
           (click)="onPageChange(page)">
           <a class="page-link">{{page}}</a>
         </li>
+        <li><p *ngIf="isLoadingMore">Loading.....</p></li>
       </ul>
     </nav>
+    
 
   </div>
 </div>
