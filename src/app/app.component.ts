@@ -89,6 +89,7 @@ export class AppComponent implements OnInit {
   }
 
   getRandomUsers() {
+    this.scrollPage=3;
     return this.randomUserService
       .generateUsers(
         this.selectedCountry,
