@@ -20,7 +20,7 @@ export class RandomUserService {
   constructor(private http:HttpClient) {}
 
   generateUsers(nation:string,seed:string,pageNum:number,totalUsers:number){
-    return this.http.get(`https://randomuser.me/api?page=${pageNum}&results=${totalUsers}&seed=${seed}&nat=${nation}`).
+    return this.http.get(`https://randomuser.me/api?results=${totalUsers}&seed=${seed}&nat=${nation}`).
     pipe(catchError((error: any, caught: Observable<any>): Observable<any>=>{
 
       let errorMessage='unknown error occured!'
