@@ -102,7 +102,6 @@ export class AppComponent implements OnInit {
           ///adding query params to route
           this.router.navigate(['/'], {
             queryParams: {
-              page: `${this.currentPage}`,
               results: `${this.totalUsers}`,
               seed: `${this.randomSeed}`,
               nat: `${this.selectedCountry}`,
