@@ -3,7 +3,6 @@ import { RandomUserService } from './random-user.service';
 import {
   Component,
   ElementRef,
-  HostListener,
   OnInit,
   ViewChild,
 } from '@angular/core';
@@ -80,6 +79,7 @@ export class AppComponent implements OnInit {
 
   onPageChange(page: number) {
     this.currentPage = page;
+    this.scrollPage=page+(page-1)+2;
     const paginatedUsers = this.paginate.paginate(
       this.randomUsers,
       this.currentPage,
@@ -89,7 +89,7 @@ export class AppComponent implements OnInit {
   }
 
   getRandomUsers() {
-    this.scrollPage=3;
+    
     return this.randomUserService
       .generateUsers(
         this.selectedCountry,
@@ -128,7 +128,8 @@ export class AppComponent implements OnInit {
               }
             }
           );
-
+          this.scrollPage=3;
+          this.currentPage=1;
           this.randomUsers = [...generatedUsers];
 
           //when component is initiated, first chunk of info is displayed
@@ -210,8 +211,9 @@ export class AppComponent implements OnInit {
       ) {
         this.currentPage++;
       }
+
       
-      let startIndex = (this.scrollPage - 1) * (10);
+      let startIndex = (this.scrollPage-1)*10;
   
       const endIndex = startIndex + 10;
   
@@ -223,6 +225,7 @@ export class AppComponent implements OnInit {
       }
   
       this.scrollPage++;
+      console.log(this.scrollPage)
     },1000)
 
     this.isLoadingMore=false
